@@ -4,7 +4,8 @@
  */
 const getFullSortedTiles = seed => {
 
-    return seed.concat(seed)
+    // .concat mergeing method doesn't works for deep-copying
+    return seed.concat(JSON.parse(JSON.stringify(seed)))
 }
 
 /**

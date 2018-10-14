@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;  
 }
 
 .App-logo {
@@ -22,6 +27,16 @@
   color: #61dafb;
 }
 
+.tile{
+  cursor: pointer;
+  background-image: url('logo.svg');
+}
+.tile-unveiled{
+  display: block;
+}
+.tile-veiled{
+  display: none !important;
+}
 
 @keyframes App-logo-spin {
   from {
