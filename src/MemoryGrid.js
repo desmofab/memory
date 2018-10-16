@@ -41,16 +41,29 @@ class MemoryGrid extends Component {
 
         setTimeout(() => {
             this.setState({
+                tiles: tiles.map((row, index) => {
+                    row.feedback = ''                    
+                    return row
+                }),
                 tilesInMove: []
             })
         }, 2000)       
     }
 
     resetMove = () => {
-        setTimeout(() => {
-            const {tiles} = this.state
-            const selectedTileKeys = this.getSelectedTileKeys()
+        const {tiles} = this.state
+        const selectedTileKeys = this.getSelectedTileKeys()
 
+        this.setState({
+            tiles: tiles.map((row, index) => {
+                if(selectedTileKeys.indexOf(index) >= 0){
+                    row.feedback = 'reset-move'
+                }
+                return row
+            })
+        })        
+
+        setTimeout(() => {
             this.setState({
                 tiles: tiles.map((row, index) => {
                     if(selectedTileKeys.indexOf(index) >= 0){
