@@ -4,7 +4,7 @@
  */
 const getFullSortedTiles = seed => {
 
-    // .concat mergeing method doesn't works for deep-copying
+    // Can't use spread operator here
     return seed.concat(JSON.parse(JSON.stringify(seed)))
 }
 
@@ -18,7 +18,7 @@ function getShuffledTiles(tilesSeed) {
 
     for (let i = tiles.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; // eslint-disable-line no-param-reassign
+        [tiles[i], tiles[j]] = [tiles[j], tiles[i]]
     }
 
     return tiles

@@ -22,77 +22,100 @@ class MemoryGrid extends Component {
         super(props)
         this.state = {
             tiles: getShuffledTiles(props.tilesData),
-            tilesInMove: [],
-            moveIsForbidden: false
+            tilesInMove: []
         }
     }
 
+    niceMove = () => {
+        setTimeout(() => {
+            this.setState({
+                tilesInMove: []
+            })
+        }, 2000)       
+    }
+
     resetMove = () => {
-        const {tiles, tilesInMove} = this.state
+        setTimeout(() => {
+            const {tiles, tilesInMove} = this.state
 
-        tilesInMove.forEach(currentTile => {
-            tiles[currentTile.key].unveiled = false
-        })
+            this.setState({
+                tiles: tiles.map((row, index) => {
+                    if([tilesInMove[0].key, tilesInMove[1].key].indexOf(index) >= 0){
+                        row.unveiled = false
+                    }
+                    return row
+                }),
+                tilesInMove: []
+            })
+        }, 2000)  
+    }
 
-        this.setState({
-            tiles: tiles,
-            tilesInMove: []
-        })     
+    isValidMove = (clickedTile) => {
+        const {tilesInMove} = this.state
+
+        // Ignore tiles already unveiled
+        if(clickedTile.unveiled){
+            return false
+        }
+
+        // Avoid third tile unveiling
+        if(tilesInMove.length === 2){
+            return false
+        }        
+
+        return true
+    }
+
+    isGameOver = () => {
+        const {tiles} = this.state
+
+        const unveiled = tiles.reduce((acc, currentTile) => {
+            let sum = currentTile.unveiled ? 1 : 0
+
+            return acc + sum
+        }, 0)
+
+        return unveiled === 12
+    }
+
+    youWin = () => {
+        /* TODO ... */
+        console.log('YOU WIN!!!!')
     }
 
     tileClicked = index => {
         const {tiles, tilesInMove} = this.state
         const clickedTile = tiles[index]
 
-        console.log(this.state)
-
-        // Ignore tiles already unveiled
-        if(clickedTile.unveiled){
-            return
-        }       
-        
-        // Avoid third tile unveiling
-        if(tilesInMove.length === 2){
+        if(!this.isValidMove(clickedTile)){
             return
         }
-        // if(moveIsForbidden()){ //reactivate after reset
-        //     return
-        // }
-        //TODO Reafctor code above with isValidMove()
-
-
-        // TODO Check if the game is over using isGameOver()
-
 
         // Second move - pair matching
         if(tilesInMove.length === 1){
-            const unveiledSibling = tiles.filter(currentTile => {
-                return currentTile.label === clickedTile.label && currentTile.unveiled
-            })
 
-            // Good Job
-            if(unveiledSibling.length === 1){
-                this.setState({
-                    tilesInMove: []
-                })
+            if(clickedTile.label === tilesInMove[0].label){
+                this.niceMove()
             }
-    
-            // Bad Move
-            if(unveiledSibling.length === 0){
-                setTimeout(() => { this.resetMove() }, 3000)
+            else{
+                this.resetMove()
             }
         }
 
-        // TODO ++moveCountTotal props from main app
-
-        clickedTile.key = index
-        clickedTile.unveiled = true
-        tiles[index] = clickedTile
-        tilesInMove.push(clickedTile)
+        // TODO ++moveCountTotal state from main app
 
         this.setState({
-            tiles: tiles,
-            tilesInMove: tilesInMove
+            tiles: tiles.map((row, rowIndex) =>{
+                if(rowIndex === index){
+                    row.unveiled = true
+                }
+                return row
+            }),
+            tilesInMove: [...tilesInMove, {...clickedTile, key: index}]
+        }, () => {
+            if(this.isGameOver()){
+                this.youWin()
+            }
         })
     }
 
