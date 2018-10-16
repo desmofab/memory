@@ -27,6 +27,18 @@ class MemoryGrid extends Component {
     }
 
     niceMove = () => {
+        const {tiles} = this.state
+        const selectedTileKeys = this.getSelectedTileKeys()
+
+        this.setState({
+            tiles: tiles.map((row, index) => {
+                if(selectedTileKeys.indexOf(index) >= 0){
+                    row.feedback = 'nice-move'
+                }
+                return row
+            })
+        })
+
         setTimeout(() => {
             this.setState({
                 tilesInMove: []
@@ -36,12 +48,14 @@ class MemoryGrid extends Component {
 
     resetMove = () => {
         setTimeout(() => {
-            const {tiles, tilesInMove} = this.state
+            const {tiles} = this.state
+            const selectedTileKeys = this.getSelectedTileKeys()
 
             this.setState({
                 tiles: tiles.map((row, index) => {
-                    if([tilesInMove[0].key, tilesInMove[1].key].indexOf(index) >= 0){
+                    if(selectedTileKeys.indexOf(index) >= 0){
                         row.unveiled = false
+                        row.feedback = ''
                     }
                     return row
                 }),
@@ -83,6 +97,41 @@ class MemoryGrid extends Component {
         console.log('YOU WIN!!!!')
     }
 
+    getSelectedTileKeys = () => {
+        const {tilesInMove} = this.state
+
+        const selectedTilesKeys = tilesInMove.map( tile => {
+            return tile.key
+        })
+
+        return selectedTilesKeys
+    }
+
+    pairMatching = () => {
+        const {tilesInMove} = this.state
+        
+        // Second move - pair matching
+        if(tilesInMove.length === 2){
+
+            if(tilesInMove[0].label === tilesInMove[1].label){
+                this.niceMove()
+            }
+            else{
+                this.resetMove()
+            }
+        } 
+    }
+
+    /* setState Callback */
+    stateChanged() {
+
+        if(this.isGameOver()){
+            this.youWin()
+        }else{
+            this.pairMatching()
+        }
+    }
+
     tileClicked = index => {
         const {tiles, tilesInMove} = this.state
         const clickedTile = tiles[index]
@@ -91,32 +140,18 @@ class MemoryGrid extends Component {
             return
         }
 
-        // Second move - pair matching
-        if(tilesInMove.length === 1){
-
-            if(clickedTile.label === tilesInMove[0].label){
-                this.niceMove()
-            }
-            else{
-                this.resetMove()
-            }
-        }
-
         // TODO ++moveCountTotal state from main app
 
         this.setState({
             tiles: tiles.map((row, rowIndex) =>{
                 if(rowIndex === index){
                     row.unveiled = true
+                    row.feedback = 'selected-tile'
                 }
                 return row
             }),
             tilesInMove: [...tilesInMove, {...clickedTile, key: index}]
-        }, () => {
-            if(this.isGameOver()){
-                this.youWin()
-            }
-        })
+        }, this.stateChanged)
     }
 
     render() {        
@@ -127,7 +162,7 @@ class MemoryGrid extends Component {
             <Grid className={classes.root} container spacing={8} justify="center">
                 {tiles.map((row, index) => (
                     <Grid item key={index} className='tile' onClick={() => this.tileClicked(index)}>
-                        <Paper className={classes.paper} elevation={4}>
+                        <Paper className={`${classes.paper} ${row.feedback}`} elevation={4}>
                             <Typography className={row.unveiled ? 'tile-unveiled' : 'tile-veiled'}
                                         component="h2"
                                         variant="h1">
