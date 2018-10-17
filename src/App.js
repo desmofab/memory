@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import logo from './logo.svg'
 import './App.css'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import TopBar from './TopBar'
 import MemoryGrid from './MemoryGrid'
 
@@ -9,6 +9,7 @@ import MemoryGrid from './MemoryGrid'
 class App extends Component {
 
     state = {
+        moves: 0,
         tiles: [
             {
                 'label': 'A',
@@ -38,7 +39,7 @@ class App extends Component {
     }
 
     render() {
-        const {tiles} = this.state
+        const {tiles, moves} = this.state
         const dark = createMuiTheme({
             palette: {
               type: 'dark',
@@ -49,7 +50,7 @@ class App extends Component {
             <MuiThemeProvider theme={dark}>
             <div className="App">
                 <div>
-                    <TopBar />
+                    <TopBar totalMoves={moves}/>
                 </div>        
                 <header className="App-header"></header>
                 <div>
