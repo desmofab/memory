@@ -4,6 +4,8 @@ import {withStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import Avatar from '@material-ui/core/Avatar'
+import Chip from '@material-ui/core/Chip'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MemoryIcon from '@material-ui/icons/Memory'
@@ -29,7 +31,7 @@ const styles = theme => ({
 class TopBar extends Component {
 
     render() {        
-        const {classes} = this.props
+        const {classes, totalMoves} = this.props
 
         return (
             <div className={classes.root}>
@@ -45,6 +47,10 @@ class TopBar extends Component {
                             <GamesIcon className={classes.extendedIcon} />
                             New Game
                         </Button></a>
+                        <Chip
+                            avatar={<Avatar>{totalMoves}</Avatar>}
+                            label="Moves"
+                        />                        
                     </Toolbar>
                 </AppBar>
             </div>

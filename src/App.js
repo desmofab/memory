@@ -9,7 +9,6 @@ import MemoryGrid from './MemoryGrid'
 class App extends Component {
 
     state = {
-        moves: 0,
         tiles: [
             {
                 'label': 'A',
@@ -35,7 +34,16 @@ class App extends Component {
                 'label': 'F',
                 'bgColor': 'brown'        
             },            
-        ]        
+        ],
+        moves: 0,      
+    }
+
+    movesIncrement = () => {
+        const {moves} = this.state
+    
+        this.setState({
+            moves: moves + 1
+        })
     }
 
     render() {
@@ -50,11 +58,11 @@ class App extends Component {
             <MuiThemeProvider theme={dark}>
             <div className="App">
                 <div>
-                    <TopBar totalMoves={moves}/>
+                    <TopBar totalMoves={moves} />
                 </div>        
                 <header className="App-header"></header>
                 <div>
-                    <MemoryGrid tilesData={tiles} />
+                    <MemoryGrid tilesData={tiles} movesIncrement={this.movesIncrement} />
                 </div> 
             </div>
             </MuiThemeProvider>

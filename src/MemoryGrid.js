@@ -121,6 +121,7 @@ class MemoryGrid extends Component {
     }
 
     pairMatching = () => {
+        const {movesIncrement} = this.props
         const {tilesInMove} = this.state
         
         // Second move - pair matching
@@ -132,6 +133,8 @@ class MemoryGrid extends Component {
             else{
                 this.resetMove()
             }
+
+            movesIncrement()
         } 
     }
 
@@ -152,8 +155,6 @@ class MemoryGrid extends Component {
         if(!this.isValidMove(clickedTile)){
             return
         }
-
-        // TODO ++moveCountTotal state from main app
 
         this.setState({
             tiles: tiles.map((row, rowIndex) =>{
