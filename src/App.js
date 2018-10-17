@@ -1,65 +1,64 @@
 import React, { Component } from 'react'
 // import logo from './logo.svg'
 import './App.css'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import TopBar from './TopBar'
 import MemoryGrid from './MemoryGrid'
 
 
 class App extends Component {
 
-  state = {
-    tiles: [
-      {
-        'label': 'A',
-        'bgColor': 'blue'
-      },
-      {
-        'label': 'B',
-        'bgColor': 'green'        
-      },
-      {
-        'label': 'C',
-        'bgColor': 'red'        
-      },
-      {
-        'label': 'D',
-        'bgColor': 'yellow'        
-      },
-      {
-        'label': 'E',
-        'bgColor': 'purple'        
-      },
-      {
-        'label': 'F',
-        'bgColor': 'brown'        
-      },            
-    ]        
-  }
+    state = {
+        tiles: [
+            {
+                'label': 'A',
+                'bgColor': 'blue'
+            },
+            {
+                'label': 'B',
+                'bgColor': 'green'        
+            },
+            {
+                'label': 'C',
+                'bgColor': 'red'        
+            },
+            {
+                'label': 'D',
+                'bgColor': 'yellow'        
+            },
+            {
+                'label': 'E',
+                'bgColor': 'purple'        
+            },
+            {
+                'label': 'F',
+                'bgColor': 'brown'        
+            },            
+        ]        
+    }
 
-  render() {
-    const {tiles} = this.state
+    render() {
+        const {tiles} = this.state
+        const dark = createMuiTheme({
+            palette: {
+              type: 'dark',
+            }
+          })
 
-    return (
-      <div className="App">
-        <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a> */}
-          <div>
-            <MemoryGrid tilesData={tiles} />
-          </div>          
-        </header>   
-      </div>
-    )
-  }
+        return (
+            <MuiThemeProvider theme={dark}>
+            <div className="App">
+                <div>
+                    <TopBar />
+                </div>        
+                <header className="App-header"></header>
+                <div>
+                    <MemoryGrid tilesData={tiles} />
+                </div> 
+            </div>
+            </MuiThemeProvider>
+        )
+    }
 }
 
 

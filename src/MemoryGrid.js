@@ -9,13 +9,13 @@ import Grid from '@material-ui/core/Grid'
 
 const styles = theme => ({
     root: {
-      flexGrow: 1,
+        flexGrow: 1,
     },
     paper: {
-      height: 140,
-      width: 100,
+        height: 140,
+        width: 100,
     }
-  })
+})
 
 class MemoryGrid extends Component {
     constructor(props) {
