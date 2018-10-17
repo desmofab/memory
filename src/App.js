@@ -12,27 +12,27 @@ class App extends Component {
         tiles: [
             {
                 'label': 'A',
-                'bgColor': 'blue'
+                'bgColor': 'bg-blue'
             },
             {
                 'label': 'B',
-                'bgColor': 'green'        
+                'bgColor': 'bg-green'        
             },
             {
                 'label': 'C',
-                'bgColor': 'red'        
+                'bgColor': 'bg-red'        
             },
             {
                 'label': 'D',
-                'bgColor': 'yellow'        
+                'bgColor': 'bg-yellow'        
             },
             {
                 'label': 'E',
-                'bgColor': 'purple'        
+                'bgColor': 'bg-purple'        
             },
             {
                 'label': 'F',
-                'bgColor': 'brown'        
+                'bgColor': 'bg-brown'        
             },            
         ],
         moves: 0,      

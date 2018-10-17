@@ -59,10 +59,29 @@ body{
     background-image: url('logo.svg');
 }
 .tile-unveiled{
-    display: block;
+    height: 100%;
 }
 .tile-veiled{
     display: none !important;
+}
+
+.bg-blue{
+    background-color: #1c54b2;
+}
+.bg-green{
+    background-color: #00a152;
+}
+.bg-red{
+    background-color: #ff3d00;
+}
+.bg-yellow{
+    background-color: #ffc107;
+}
+.bg-purple{
+    background-color: #9c27b0;
+}
+.bg-brown{
+    background-color: #b23c17;
 }
 
 a{

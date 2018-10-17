@@ -5,6 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import Snackbar from '@material-ui/core/Snackbar';
 
 
 const styles = theme => ({
@@ -22,7 +23,8 @@ class MemoryGrid extends Component {
         super(props)
         this.state = {
             tiles: getShuffledTiles(props.tilesData),
-            tilesInMove: []
+            tilesInMove: [],
+            winMessage: false
         }
     }
 
@@ -106,8 +108,7 @@ class MemoryGrid extends Component {
     }
 
     youWin = () => {
-        /* TODO ... */
-        console.log('YOU WIN!!!!')
+        this.setState({winMessage: true})
     }
 
     getSelectedTileKeys = () => {
@@ -126,6 +127,7 @@ class MemoryGrid extends Component {
         
         // Second move - pair matching
         if(tilesInMove.length === 2){
+            movesIncrement()
 
             if(tilesInMove[0].label === tilesInMove[1].label){
                 this.niceMove()
@@ -133,18 +135,16 @@ class MemoryGrid extends Component {
             else{
                 this.resetMove()
             }
-
-            movesIncrement()
         } 
     }
 
     /* setState Callback */
     stateChanged() {
 
+        this.pairMatching()
+
         if(this.isGameOver()){
             this.youWin()
-        }else{
-            this.pairMatching()
         }
     }
 
@@ -173,11 +173,12 @@ class MemoryGrid extends Component {
         const {tiles} = this.state
 
         return (
+            <div>
             <Grid className={classes.root} container spacing={8} justify="center">
                 {tiles.map((row, index) => (
-                    <Grid item key={index} className='tile' onClick={() => this.tileClicked(index)}>
-                        <Paper className={`${classes.paper} ${row.feedback}`} elevation={4}>
-                            <Typography className={row.unveiled ? 'tile-unveiled' : 'tile-veiled'}
+                    <Grid item key={index} onClick={() => this.tileClicked(index)}>
+                        <Paper className={`${classes.paper} ${row.feedback} tile`} elevation={4}>
+                            <Typography className={`${row.bgColor} ${row.unveiled ? 'tile-unveiled' : 'tile-veiled'} `}
                                         component="h2"
                                         variant="h1">
                                 {row.label}
@@ -185,7 +186,20 @@ class MemoryGrid extends Component {
                         </Paper>
                     </Grid>
                 ))}
-            </Grid>           
+            </Grid>
+            <Snackbar
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            open={this.state.winMessage}
+            autoHideDuration={5000}
+            ContentProps={{
+                'aria-describedby': 'message-id',
+            }}
+            message='CONGRATULATIONS! YOU WON!!!'
+            />         
+    </div>
         )
     }
 }
