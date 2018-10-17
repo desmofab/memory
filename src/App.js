@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import logo from './logo.svg'
-import './App.css'
+import './css/App.css'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import TopBar from './TopBar'
 import MemoryGrid from './MemoryGrid'

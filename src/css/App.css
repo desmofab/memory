@@ -56,7 +56,7 @@ body{
 
 .tile{
     cursor: pointer;
-    background-image: url('logo.svg');
+    background-image: url('../img/logo.svg');
 }
 .tile-unveiled{
     height: 100%;

@@ -11,6 +11,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 const styles = theme => ({
     root: {
         flexGrow: 1,
+        width: '100%'
     },
     paper: {
         height: 140,
