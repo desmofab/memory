@@ -13,7 +13,7 @@ Obbiettivi:
 Le carte sono lettere con sfondi colorati.
 La griglia contiene 12 carte.
 
-L'applicazione è stat scritta usando React.
+L'applicazione è stata scritta usando React.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
